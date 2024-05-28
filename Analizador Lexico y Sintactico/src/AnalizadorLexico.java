@@ -8,9 +8,9 @@ import java.io.PushbackReader;
 
 public class AnalizadorLexico {
     public static Nodo NodoIni = null;
-    public static String RutaTxt = "C:/Users/robol/Documents/TextPrueba.txt";
+    public static String RutaTxt = "recursos\\TextPrueba.txt";
 
-    public static boolean EstaEnAlfabeto(char caracter) {
+    private static boolean EstaEnAlfabeto(char caracter) {
         if (Character.isLetter(caracter)) {
             return true;
         }
@@ -18,14 +18,14 @@ public class AnalizadorLexico {
         return false;
     }
 
-    public static boolean EsteaEnDigito(char Digito) {
+    private static boolean EsteaEnDigito(char Digito) {
         if (Character.isDigit(Digito)) {
             return true;
         }
         return false;
     }
 
-    public void CrearNodo(String Token, String Campo2, int NumLinea) {
+    private void CrearNodo(String Token, String Campo2, int NumLinea) {
         Nodo NuevoNodo = new Nodo(Token, Campo2, NumLinea);
         Nodo Aux = NodoIni;
         if (NodoIni != null) {
@@ -135,12 +135,12 @@ public class AnalizadorLexico {
 
                         if (!".".equals((char) CaracterLeido) && !EsteaEnDigito((char) CaracterLeido)) {
                             if (NumeroRacional) {
-                                AnalizadorLexico.CrearNodo("NR " + Acumulado, "Token:102", SaltosLinea);
+                                AnalizadorLexico.CrearNodo("NR " + Acumulado, "102", SaltosLinea);
                                 Acumulado = "";
                                 break;
                             }
                             if (!NumeroRacional) {
-                                AnalizadorLexico.CrearNodo("NE " + Acumulado, "Token:101", SaltosLinea);
+                                AnalizadorLexico.CrearNodo("NE " + Acumulado, "101", SaltosLinea);
                                 Acumulado = "";
                                 break;
                             }
@@ -163,8 +163,7 @@ public class AnalizadorLexico {
                                 Acumulado = Acumulado + ((char) CaracterLeido);
                             }
                             if (palabrasReservadas.get(Acumulado) != null) {
-                                AnalizadorLexico.CrearNodo("Palabra reservada " + Acumulado,
-                                        "Token " + (palabrasReservadas.get(Acumulado)), SaltosLinea);
+                                AnalizadorLexico.CrearNodo("Palabra reservada " + Acumulado, (palabrasReservadas.get(Acumulado)), SaltosLinea);
 
                                 Acumulado = "";
                                 break;
@@ -190,7 +189,7 @@ public class AnalizadorLexico {
                         SaltosLinea++;
                     }
                     if (((char) CaracterLeido) != '*') {
-                        AnalizadorLexico.CrearNodo("Op Arit /", "Token: 106", SaltosLinea);
+                        AnalizadorLexico.CrearNodo("Op Arit /", "106", SaltosLinea);
                         Acumulado = "";
                     }
                     if ('*' == ((char) CaracterLeido)) {
@@ -341,7 +340,7 @@ public class AnalizadorLexico {
                 // Cpturar Lexemas Simples
                 if (Lexema.get(((char) CaracterLeido) + "") != null) {
                     Acumulado = ((char) CaracterLeido) + "";
-                    AnalizadorLexico.CrearNodo(Acumulado, "Token: " + Lexema.get(Acumulado), SaltosLinea);
+                    AnalizadorLexico.CrearNodo(Acumulado,Lexema.get(Acumulado), SaltosLinea);
                     Acumulado = "";
                 }
             }
