@@ -255,8 +255,7 @@ public class AnalizadorLexico {
 
                 }
                 // Capturar Lexemas Compuestos
-                if ((((char) CaracterLeido) == '<') || (((char) CaracterLeido) == '=')
-                        || (((char) CaracterLeido) == '>') || (((char) CaracterLeido) == ':')) {
+                if ((((char) CaracterLeido) == '<') || (((char) CaracterLeido) == '=')|| (((char) CaracterLeido) == '>') || (((char) CaracterLeido) == ':')) {
                     Acumulado = (char) CaracterLeido + "";
                     do {
 
