@@ -1,1 +1,1 @@
-program afas,sds,ghg,dfsd; .
+program fdfds; var sd,de,err,ere : integgSer ; var dffd,dsfsd : integer;.

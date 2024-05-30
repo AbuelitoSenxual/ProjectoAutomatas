@@ -4,7 +4,7 @@ se usa para indicar fin del programa)
 <resto> ≡ <letra> | <digito> | <letra> <resto> | <digito> <resto>,
 <letra> ≡ a | b | ... | z | A | B | ... | Z,
 <digito> ≡ 0 | 1 | 2 | ... | 9,
-<coma> ≡ ”,”, (la coma ”,” se usa como s´ımbolo terminal)
+<coma> ≡ ”,”, (la coma ”,” se usa como sımbolo terminal)
 <Operador relacional> ≡   <|<=|>|>=|==|<>,
 <Operador aritmetico> ≡  +|-|*|/
 <lista identificador> ≡ <identificador> | <lista identificador> <coma> <identificador>,

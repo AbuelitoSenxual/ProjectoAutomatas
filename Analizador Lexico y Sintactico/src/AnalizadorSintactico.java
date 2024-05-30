@@ -45,7 +45,7 @@ public class AnalizadorSintactico {
     private static Nodo Auxiliar;
     private static boolean StatusError;
 
-    // El metodo ListaIdentificadores se entrega en , siempre
+    // El metodo ListaIdentificadores se entrega en , siempre  lo entrega en el suigiente elemento 
     private static void ListaIdentificadores() {
         do {
             if (Auxiliar == null) {
@@ -94,8 +94,60 @@ public class AnalizadorSintactico {
          }
     }
    
-    private static void definicion(){}
+    private static void definicion(){
+        //lee el siguiente lexema y verifica si es nesesario analizar una lista analiza su lista 
+        Auxiliar = Auxiliar.NodoSig;
+        if (Auxiliar == null ||!"100".equals(Auxiliar.Campo2)) {
+            System.out.println("\n" + " Error se esperaba una lista de identificadores");
+            StatusError = true;
+        }
+        if ("100".equals(Auxiliar.Campo2)) {
+            Auxiliar = Auxiliar.NodoSig;
+            //verifica que el siguiente elemento sea , y asi inicilisar una lista
+            if ("110".equals(Auxiliar.Campo2)) {
+                ListaIdentificadores();
+            }
+            //verifica que el siguente elemento sea : si no captura el erro
+            if (Auxiliar == null ||!"112".equals(Auxiliar.Campo2)) {
+                System.out.println("\n" + " Error se esperaba :");
+                StatusError = true;
+            }
+            if ("112".equals(Auxiliar.Campo2)) {
+                Auxiliar = Auxiliar.NodoSig;
+                //verifica el siguiente elemento sea el tipo de dato Integer
+                if (Auxiliar == null ||!"203".equals(Auxiliar.Campo2)) {
+                    System.out.println("\n" + " Error se esperaba tipo de dato integer");
+                    StatusError = true;
+                }
+
+                if ("203".equals(Auxiliar.Campo2)) {
+                    //en el caso que el tipo de dato sea integer verifica que se cierre de manera correcta con ;
+                    Auxiliar = Auxiliar.NodoSig;
+                    if (!"111".equals(Auxiliar.Campo2)) {
+                        System.out.println("\n" + " Error se esperaba ;");
+                        StatusError = true;
+                    }
+                    if ("111".equals(Auxiliar.Campo2)) {
+                        //en el caso que se cierre bien se verifica si es necesario volver a llamar al metodo
+                        Auxiliar = Auxiliar.NodoSig;
+                        if ("201".equals(Auxiliar.Campo2)) {
+                            definicion();
+                        } 
+                    }
+
+                }
+            }
+
+        }
+
+        
+       
+    }
     
+
+
+
+
     private static void BloqueEnunciados(){}
 
     public static void main(String[] args) {
@@ -152,7 +204,7 @@ public class AnalizadorSintactico {
                         Bloque();
                     }
                     // verificar si se termina de manera correcta el codigo
-                    if (!Auxiliar.Campo2.equals("109")) {
+                    if (!Auxiliar.Campo2.equals("109")&& StatusError == false) {
                         System.out.println("\n" + "Error: No se terminó de manera correcta el código");
                         StatusError = true;
                     }
