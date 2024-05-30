@@ -40,12 +40,15 @@ not	217
     <Condicion> ≡ <Identificador | Digito><Operador relacional><Identificador | Digito>;
     <Bucles> ≡ <While><Condicion > <Do><bloque>; */
 
+import java.util.Set;
+
 public class AnalizadorSintactico {
     private static Nodo NodoIni;
     private static Nodo Auxiliar;
     private static boolean StatusError;
 
-    // El metodo ListaIdentificadores se entrega en , siempre
+    // El metodo ListaIdentificadores se entrega en , siempre lo entrega en el
+    // suigiente elemento
     private static void ListaIdentificadores() {
         do {
             if (Auxiliar == null) {
@@ -82,21 +85,163 @@ public class AnalizadorSintactico {
         } while (!StatusError);
     }
 
-    
     private static void Bloque() {
-        //verifica si es Definicion Al inicia con la plaba reservada var =201
+        // verifica si es Definicion Al inicia con la plaba reservada var =201
         if ("201".equals(Auxiliar.Campo2)) {
-           definicion(); 
+            definicion();
         }
-        //verifica si es bloque de enunciados Al inicia con la plaba reservada begin = 206
+        // verifica si es bloque de enunciados Al inicia con la plaba reservada begin =
+        // 206
         if ("206".equals(Auxiliar.Campo2)) {
-            BloqueEnunciados(); 
-         }
+            BloqueEnunciados();
+        }
     }
-   
-    private static void definicion(){}
+
+    private static void definicion() {
+        // lee el siguiente lexema y verifica si es nesesario analizar una lista analiza
+        // su lista
+        Auxiliar = Auxiliar.NodoSig;
+        if (Auxiliar == null || !"100".equals(Auxiliar.Campo2)) {
+            System.out.println("\n" + " Error se esperaba una lista de identificadores");
+            StatusError = true;
+        }
+        if ("100".equals(Auxiliar.Campo2)) {
+            Auxiliar = Auxiliar.NodoSig;
+            // verifica que el siguiente elemento sea , y asi inicilisar una lista
+            if ("110".equals(Auxiliar.Campo2)) {
+                ListaIdentificadores();
+            }
+            // verifica que el siguente elemento sea : si no captura el erro
+            if (Auxiliar == null || !"112".equals(Auxiliar.Campo2)) {
+                System.out.println("\n" + " Error se esperaba :");
+                StatusError = true;
+            }
+            if ("112".equals(Auxiliar.Campo2)) {
+                Auxiliar = Auxiliar.NodoSig;
+                // verifica el siguiente elemento sea el tipo de dato Integer
+                if (Auxiliar == null || !"203".equals(Auxiliar.Campo2)) {
+                    System.out.println("\n" + " Error se esperaba tipo de dato integer");
+                    StatusError = true;
+                }
+
+                if ("203".equals(Auxiliar.Campo2)) {
+                    // en el caso que el tipo de dato sea integer verifica que se cierre de manera
+                    // correcta con ;
+                    Auxiliar = Auxiliar.NodoSig;
+                    if (!"111".equals(Auxiliar.Campo2)) {
+                        System.out.println("\n" + " Error se esperaba ;");
+                        StatusError = true;
+                    }
+                    if ("111".equals(Auxiliar.Campo2)) {
+                        // en el caso que se cierre bien se verifica si es necesario volver a llamar al
+                        // metodo
+                        Auxiliar = Auxiliar.NodoSig;
+                        if ("201".equals(Auxiliar.Campo2)) {
+                            definicion();
+                        }
+                    }
+
+                }
+            }
+
+        }
+
+    }
+
+    // se recive el metodo bloque Enunciado con la palabra reservada begin = 206
+    private static void BloqueEnunciados() {
+        // Para que insializar una lista enunciados debe de empezar por un
+        // identificador= 100 (para operacion o asignacion)
+        // o palabra reservada if = 210 (para alternativa simple y doble) o while=213
+        // (para bucle)
+        Auxiliar = Auxiliar.NodoSig;
+        // captura que no se inicialice bien
+        if (!"100".equals(Auxiliar.Campo2) && !"210".equals(Auxiliar.Campo2) && !"213".equals(Auxiliar.Campo2)
+                && Auxiliar == null) {
+            System.out.println("\n" + " Error no se inicializo correctamente la lista de enunciados ");
+            StatusError = true;
+        } else {
+            // se insilizo bien la lista de enunciados
+            ListaEnunciado();
+            // captura el error generado al no cerrar con end
+            Auxiliar = Auxiliar.NodoSig;
+            if (!"207".equals(Auxiliar.Campo2) || Auxiliar == null) {
+                System.out.println("\n" + " Error se esperaba un end");
+                StatusError = true;
+            }
+        }
+
+    }
+
+    // se recive el metodo ListaEnunciado con identificador= 100 (para operacion)
+    // o palabra reservada if = 210 (para alternativa simple y doble) o while=213
+    // para(Bucles)
+    private static void ListaEnunciado() {
+        // captura operaciones 
+        if ("100".equals(Auxiliar.Campo2)) {
+            operaciones();
+        }
+        // Captura alternativas simples y doble
+        if ("210".equals(Auxiliar.Campo2)) {
+            AlternativaSimple();
+        }
+        // Captura bucles
+        if ("213".equals(Auxiliar.Campo2)) {
+            bucle();
+        }
+
+        // Captura el error donde no se cierra de manera correcta la lista de Enunciado
+        // con ; = 111
+        Auxiliar = Auxiliar.NodoSig;
+        if (!"111".equals(Auxiliar.Campo2) || Auxiliar == null) {
+            System.out.println("\n" + " Error no se  cierra de manera correcta la lista de Enunciado con ; ");
+            StatusError = true;
+        }
+        // elimina ; por lista de Enunciado anidadadas
+        if ("111".equals(Auxiliar.Campo2) || Auxiliar == null) {
+            do {
+
+                Auxiliar = Auxiliar.NodoSig;
+
+            } while ("111".equals(Auxiliar.Campo2));
+        }
+    }
+
+    // verifica alternativas simples y manda a metodo alternativas doble si es
+    // necesario
+    private static void AlternativaSimple() {
+    }
+
+    private static void bucle() {
+        Auxiliar = Auxiliar.NodoSig;
+        //verifica error no se inicializa correctamente una condicion (tiene que ser digito(101 NE,102 ND) o identificador(100))
+        if (!"101".equals(Auxiliar.Campo2)&&!"102".equals(Auxiliar.Campo2)&&!"100".equals(Auxiliar.Campo2)&& Auxiliar == null) {
+            System.out.println("\n" + " Error no se  inicializo correctamente la condicion ");
+            StatusError = true;
+        }
+        else{
+            condicion();
+            //verifica se declare la palabra reservada do despues de la condicion do=214
+            Auxiliar = Auxiliar.NodoSig;
+            if (!"214".equals(Auxiliar.Campo2)|| Auxiliar == null) {
+                System.out.println("\n" + " Error no se  inicializo la palabra reservada do");
+                StatusError = true;
+            }
+            else{
+                Bloque();
+            }
+        }
+        
+
+    }
+    private static void operaciones() {
+    }
+    private static void condicion() {
+    }
+
+
+
     
-    private static void BloqueEnunciados(){}
 
     public static void main(String[] args) {
         NodoIni = AnalizadorLexico.ObtenerNodoIniLexemas();
@@ -115,7 +260,6 @@ public class AnalizadorSintactico {
                 System.out.println("\n" + " Error se esperar un identificador o lista de identificadores");
                 StatusError = true;
             }
-
             if (Auxiliar.Campo2 == "100") {
                 Auxiliar = Auxiliar.NodoSig;
                 // Verifica que empiece una lista de identificadores con ,=110 o se termine la
@@ -129,7 +273,6 @@ public class AnalizadorSintactico {
                     ListaIdentificadores();
 
                 }
-
                 // Captura error de terminar de manera incorrecta a orracion
                 if (Auxiliar == null || !"111".equals(Auxiliar.Campo2)) {
                     System.out.println("\n" + " Error se esperarba lista de identificadores o final de oracion con ;");
@@ -152,10 +295,14 @@ public class AnalizadorSintactico {
                         Bloque();
                     }
                     // verificar si se termina de manera correcta el codigo
-                    if (!Auxiliar.Campo2.equals("109")) {
+                    if (!Auxiliar.Campo2.equals("109") && StatusError == false) {
                         System.out.println("\n" + "Error: No se terminó de manera correcta el código");
                         StatusError = true;
                     }
+                    if (Auxiliar.Campo2.equals("109") && StatusError == false) {
+                        System.out.println("\n" + "Ejecucion exitosa");
+                    }
+
                 }
 
             }

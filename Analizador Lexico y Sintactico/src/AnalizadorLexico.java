@@ -79,6 +79,7 @@ public class AnalizadorLexico {
         Lexema.put(".", "109");
         Lexema.put(",", "110");
         Lexema.put(";", "111");
+        Lexema.put(":", "112");
         // Crear lista de Errores
         Map<String, String> Errores = new HashMap<>();
         Errores.put("500", "Se esperaba un digito");
@@ -320,19 +321,22 @@ public class AnalizadorLexico {
                             }
                         }
                         if ((char) CaracterLeido == ':') {
+
                             CaracterLeido = Lector.read();
-                            if ((char) CaracterLeido != '=') {
-                                AnalizadorLexico.CrearNodo("Error:502", Errores.get("502"), SaltosLinea);
-                                Lector.unread(CaracterLeido);
-                                Acumulado = "";
-                                break;
-                            }
                             if ((char) CaracterLeido == '=') {
                                 Acumulado = Acumulado + (char) CaracterLeido;
                                 AnalizadorLexico.CrearNodo(Acumulado, "118", SaltosLinea);
                                 Acumulado = "";
                                 break;
                             }
+                            
+                            if ((char) CaracterLeido != '=') {
+                                AnalizadorLexico.CrearNodo(Acumulado, "112", SaltosLinea);
+                                Lector.unread(CaracterLeido);
+                                Acumulado = "";
+                                break;
+                            }
+                            
                         }
                     } while (CaracterLeido != -1);
                 }
@@ -346,7 +350,7 @@ public class AnalizadorLexico {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        
         return NodoIni;
     }
 

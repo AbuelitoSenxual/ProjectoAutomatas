@@ -1,1 +1,3 @@
-program afas,sds,ghg,dfsd; .
+program fs ; 
+
+begin while ff < 5 end .
