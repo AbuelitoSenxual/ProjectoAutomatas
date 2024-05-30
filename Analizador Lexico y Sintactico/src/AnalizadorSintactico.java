@@ -177,7 +177,7 @@ public class AnalizadorSintactico {
     // o palabra reservada if = 210 (para alternativa simple y doble) o while=213
     // para(Bucles)
     private static void ListaEnunciado() {
-        // captura operaciones 
+        // captura operaciones
         if ("100".equals(Auxiliar.Campo2)) {
             operaciones();
         }
@@ -214,114 +214,76 @@ public class AnalizadorSintactico {
 
     private static void bucle() {
         Auxiliar = Auxiliar.NodoSig;
-        //verifica error no se inicializa correctamente una condicion (tiene que ser digito(101 NE,102 ND) o identificador(100))
-        if (!"101".equals(Auxiliar.Campo2)&&!"102".equals(Auxiliar.Campo2)&&!"100".equals(Auxiliar.Campo2)&& Auxiliar == null) {
+        // verifica error no se inicializa correctamente una condicion (tiene que ser
+        // digito(101 NE,102 ND) o identificador(100))
+        if (!"101".equals(Auxiliar.Campo2) && !"102".equals(Auxiliar.Campo2) && !"100".equals(Auxiliar.Campo2)
+                && Auxiliar == null) {
             System.out.println("\n" + " Error no se  inicializo correctamente la condicion ");
             StatusError = true;
         }
-        else{
+        if ("101".equals(Auxiliar.Campo2) || "102".equals(Auxiliar.Campo2) || "100".equals(Auxiliar.Campo2)) {
             condicion();
-            //verifica se declare la palabra reservada do despues de la condicion do=214
+            // verifica se declare la palabra reservada do despues de la condicion do=214
             Auxiliar = Auxiliar.NodoSig;
-            if (!"214".equals(Auxiliar.Campo2)|| Auxiliar == null) {
+            if (!"214".equals(Auxiliar.Campo2) || Auxiliar == null) {
                 System.out.println("\n" + " Error no se  inicializo la palabra reservada do");
                 StatusError = true;
-            }
-            else{
-                Bloque();
+            } else {
+                Auxiliar = Auxiliar.NodoSig;
+                // Verificar si le sigue un bloque
+                if (Auxiliar != null && (Auxiliar.Campo2.equals("201") || Auxiliar.Campo2.equals("206"))) {
+                    Bloque();
+                    Auxiliar = Auxiliar.NodoSig;
+                    // verifica que se termine de manera correcta la el bucle con ;
+                    if (!"111".equals(Auxiliar.Campo2) || Auxiliar == null) {
+                        System.out.println("\n" + " Error se esperaba un ;");
+                        StatusError = true;
+                    }
+
+                } else {
+                    System.out.println("\n" + " Error se esoeraba la pablra reservada var o begin");
+                    StatusError = true;
+                }
             }
         }
-        
 
     }
-    private static final Set<String> OPERADORES_RELACIONALES = Set.of("102", "103", "104", "105", "106", "107");
-    private static final Set<String> OPERADORES_ARITMETICOS = Set.of("108", "109", "110", "111");
-    
-    private static void Operaciones() {
-        // Verificar que el primer token sea un identificador
-        if (!"100".equals(Auxiliar.Campo2)) {
-            System.out.println("\n" + " Error: Se esperaba un identificador");
-            StatusError = true;
-            return;
-        }
-    
-        // Avanzar al siguiente nodo
-        Auxiliar = Auxiliar.NodoSig;
-        if (Auxiliar == null) {
-            System.out.println("\n" + " Error: Se esperaba un operador relacional");
-            StatusError = true;
-            return;
-        }
-    
-        // Verificar que el siguiente token sea un operador relacional
-        if (!OPERADORES_RELACIONALES.contains(Auxiliar.Campo2)) {
-            System.out.println("\n" + " Error: Se esperaba un operador relacional");
-            StatusError = true;
-            return;
-        }
-    
-        // Avanzar al siguiente nodo
-        Auxiliar = Auxiliar.NodoSig;
-        if (Auxiliar == null) {
-            System.out.println("\n" + " Error: Se esperaba un identificador o dígito");
-            StatusError = true;
-            return;
-        }
-    
-        // Verificar que el siguiente token sea un identificador o dígito
-        if (!"100".equals(Auxiliar.Campo2) && !"101".equals(Auxiliar.Campo2)) {
-            System.out.println("\n" + " Error: Se esperaba un identificador o dígito");
-            StatusError = true;
-            return;
-        }
-    
-        // Avanzar al siguiente nodo
-        Auxiliar = Auxiliar.NodoSig;
-        if (Auxiliar == null) {
-            System.out.println("\n" + " Error: Se esperaba un operador aritmético");
-            StatusError = true;
-            return;
-        }
-    
-        // Verificar que el siguiente token sea un operador aritmético
-        if (!OPERADORES_ARITMETICOS.contains(Auxiliar.Campo2)) {
-            System.out.println("\n" + " Error: Se esperaba un operador aritmético");
-            StatusError = true;
-            return;
-        }
-    
-        // Avanzar al siguiente nodo
-        Auxiliar = Auxiliar.NodoSig;
-        if (Auxiliar == null) {
-            System.out.println("\n" + " Error: Se esperaba un identificador o dígito");
-            StatusError = true;
-            return;
-        }
-    
-        // Verificar que el siguiente token sea un identificador o dígito
-        if (!"100".equals(Auxiliar.Campo2) && !"101".equals(Auxiliar.Campo2)) {
-            System.out.println("\n" + " Error: Se esperaba un identificador o dígito");
-            StatusError = true;
-            return;
-        }
-    
-        // Avanzar al siguiente nodo
-        Auxiliar = Auxiliar.NodoSig;
-        if (Auxiliar == null || !"111".equals(Auxiliar.Campo2)) {
-            System.out.println("\n" + " Error: Se esperaba ;");
-            StatusError = true;
-            return;
-        }
-    
-        // Si llega hasta aquí, la operación se ha reconocido correctamente
-        System.out.println("\n" + " Operación reconocida correctamente");
+
+    private static void operaciones() {
     }
+
+    // se entrega con el operador el id o digito <Operador relacional> ≡
+    // <|<=|>|>=|==|<>,
     private static void condicion() {
+        Auxiliar = Auxiliar.NodoSig;
+        // Captura error al no resivir un operador relacional
+        if (Auxiliar == null ||
+                (!"112".equals(Auxiliar.Campo2) &&
+                        !"113".equals(Auxiliar.Campo2) &&
+                        !"114".equals(Auxiliar.Campo2) &&
+                        !"115".equals(Auxiliar.Campo2) &&
+                        !"116".equals(Auxiliar.Campo2) &&
+                        !"117".equals(Auxiliar.Campo2))) {
+
+            System.out.println("\n" + " Error se esperaba un Operador relacional");
+            StatusError = true;
+        } else {
+            Auxiliar = Auxiliar.NodoSig;
+            // verificar si le sigue un identificador o digito
+            if (!"101".equals(Auxiliar.Campo2) && !"102".equals(Auxiliar.Campo2) && !"100".equals(Auxiliar.Campo2)
+                    && Auxiliar == null) {
+                System.out.println("\n" + " Error no se  esperaba un identificador o digito ");
+                StatusError = true;
+            } else {
+                Auxiliar = Auxiliar.NodoSig;
+                // verifica que se termine de manera correcta la coindicion con ;
+                if (!"111".equals(Auxiliar.Campo2) || Auxiliar == null) {
+                    System.out.println("\n" + " Error se esperaba un ;");
+                    StatusError = true;
+                }
+            }
+        }
     }
-
-
-
-    
 
     public static void main(String[] args) {
         NodoIni = AnalizadorLexico.ObtenerNodoIniLexemas();

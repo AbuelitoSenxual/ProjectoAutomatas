@@ -27,9 +27,9 @@ se usa para indicar fin del programa)
 
 <Bucles> ≡ <While><Condicion > <Do><bloque>;
 
-<Condicion> ≡ <Identificador | Digito><Operador relacional><Identificador | Digito>;
+<Condicion> ≡ <Identificador | Digito> <Operador relacional> <Identificador | Digito>;
 
-//Bucles para que se coma los
+//Bucles para que se coma los ;
 <lista enunciados> ≡ <Operaciones> | <Asignaciones> | <lista-enunciados> | <Alternativas> | <Bucles> ;;;;
 
 program fs ; vegin while ff < 5 end .
