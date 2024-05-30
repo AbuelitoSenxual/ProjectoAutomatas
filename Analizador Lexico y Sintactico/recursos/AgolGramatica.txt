@@ -11,12 +11,20 @@ se usa para indicar fin del programa)
 <bloque> ≡ <definiciones> | <bloque de enunciados>,
 
 <definiciones> ≡ var <lista identificador> : <tipo> ; | <definiciones> var <lista identificador> : <tipo> ; ,<tipo> ≡ integer,
+
 <bloque de enunciados> ≡ begin <lista enunciados> end ,
 <lista enunciados> ≡ <Operaciones> | <Asignaciones> | <lista-enunciados> | <Alternativas> | <Bucles> ;}
+
 <Operaciones> ≡ <Identificador><Operador relacional><Identificador | Digito><Operador aritmetico><Identificador | Digito>;
 <Asignaciones> ≡ <Identificador><Operador relacional><Identificador | Digito>;
 <Alternativas> ≡ <Alternativa Simple> | <Alternativa Doble>
 <Alternativa Simple> ≡ <if><Condicion><then><bloque de enunciados> 
 <Alternativa Doble> ≡ <if><Condicion><then><bloque de enunciados><else><bloque de enunciados>
-<Condicion> ≡ <Identificador | Digito><Operador relacional><Identificador | Digito>;
 <Bucles> ≡ <While><Condicion > <Do><bloque>;
+
+<Condicion> ≡ <Identificador | Digito><Operador relacional><Identificador | Digito>;
+
+
+
+//Bucles para que se coma los;; anidados 
+<lista enunciados> ≡ <Operaciones> | <Asignaciones> | <lista-enunciados> | <Alternativas> | <Bucles> ;;;;
