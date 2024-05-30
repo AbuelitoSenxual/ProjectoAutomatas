@@ -234,7 +234,87 @@ public class AnalizadorSintactico {
         
 
     }
-    private static void operaciones() {
+    private static final Set<String> OPERADORES_RELACIONALES = Set.of("102", "103", "104", "105", "106", "107");
+    private static final Set<String> OPERADORES_ARITMETICOS = Set.of("108", "109", "110", "111");
+    
+    private static void Operaciones() {
+        // Verificar que el primer token sea un identificador
+        if (!"100".equals(Auxiliar.Campo2)) {
+            System.out.println("\n" + " Error: Se esperaba un identificador");
+            StatusError = true;
+            return;
+        }
+    
+        // Avanzar al siguiente nodo
+        Auxiliar = Auxiliar.NodoSig;
+        if (Auxiliar == null) {
+            System.out.println("\n" + " Error: Se esperaba un operador relacional");
+            StatusError = true;
+            return;
+        }
+    
+        // Verificar que el siguiente token sea un operador relacional
+        if (!OPERADORES_RELACIONALES.contains(Auxiliar.Campo2)) {
+            System.out.println("\n" + " Error: Se esperaba un operador relacional");
+            StatusError = true;
+            return;
+        }
+    
+        // Avanzar al siguiente nodo
+        Auxiliar = Auxiliar.NodoSig;
+        if (Auxiliar == null) {
+            System.out.println("\n" + " Error: Se esperaba un identificador o dígito");
+            StatusError = true;
+            return;
+        }
+    
+        // Verificar que el siguiente token sea un identificador o dígito
+        if (!"100".equals(Auxiliar.Campo2) && !"101".equals(Auxiliar.Campo2)) {
+            System.out.println("\n" + " Error: Se esperaba un identificador o dígito");
+            StatusError = true;
+            return;
+        }
+    
+        // Avanzar al siguiente nodo
+        Auxiliar = Auxiliar.NodoSig;
+        if (Auxiliar == null) {
+            System.out.println("\n" + " Error: Se esperaba un operador aritmético");
+            StatusError = true;
+            return;
+        }
+    
+        // Verificar que el siguiente token sea un operador aritmético
+        if (!OPERADORES_ARITMETICOS.contains(Auxiliar.Campo2)) {
+            System.out.println("\n" + " Error: Se esperaba un operador aritmético");
+            StatusError = true;
+            return;
+        }
+    
+        // Avanzar al siguiente nodo
+        Auxiliar = Auxiliar.NodoSig;
+        if (Auxiliar == null) {
+            System.out.println("\n" + " Error: Se esperaba un identificador o dígito");
+            StatusError = true;
+            return;
+        }
+    
+        // Verificar que el siguiente token sea un identificador o dígito
+        if (!"100".equals(Auxiliar.Campo2) && !"101".equals(Auxiliar.Campo2)) {
+            System.out.println("\n" + " Error: Se esperaba un identificador o dígito");
+            StatusError = true;
+            return;
+        }
+    
+        // Avanzar al siguiente nodo
+        Auxiliar = Auxiliar.NodoSig;
+        if (Auxiliar == null || !"111".equals(Auxiliar.Campo2)) {
+            System.out.println("\n" + " Error: Se esperaba ;");
+            StatusError = true;
+            return;
+        }
+    
+        // Si llega hasta aquí, la operación se ha reconocido correctamente
+        System.out.println("\n" + " Operación reconocida correctamente");
     }
     private static void condicion() {
     }
