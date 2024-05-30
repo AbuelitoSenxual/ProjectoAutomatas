@@ -40,6 +40,8 @@ not	217
     <Condicion> ≡ <Identificador | Digito><Operador relacional><Identificador | Digito>;
     <Bucles> ≡ <While><Condicion > <Do><bloque>; */
 
+import java.util.Set;
+
 public class AnalizadorSintactico {
     private static Nodo NodoIni;
     private static Nodo Auxiliar;
@@ -154,8 +156,8 @@ public class AnalizadorSintactico {
         // (para bucle)
         Auxiliar = Auxiliar.NodoSig;
         // captura que no se inicialice bien
-        if (!"100".equals(Auxiliar.Campo2) || !"210".equals(Auxiliar.Campo2) || !"213".equals(Auxiliar.Campo2)
-                || Auxiliar == null) {
+        if (!"100".equals(Auxiliar.Campo2) && !"210".equals(Auxiliar.Campo2) && !"213".equals(Auxiliar.Campo2)
+                && Auxiliar == null) {
             System.out.println("\n" + " Error no se inicializo correctamente la lista de enunciados ");
             StatusError = true;
         } else {
@@ -170,10 +172,76 @@ public class AnalizadorSintactico {
         }
 
     }
-    // se recive el metodo ListaEnunciado con identificador= 100 (para operacion o asignacion)
-    // o palabra reservada if = 210 (para alternativa simple y doble) o while=213 para(Bucles)
+
+    // se recive el metodo ListaEnunciado con identificador= 100 (para operacion)
+    // o palabra reservada if = 210 (para alternativa simple y doble) o while=213
+    // para(Bucles)
     private static void ListaEnunciado() {
+        // captura operaciones 
+        if ("100".equals(Auxiliar.Campo2)) {
+            operaciones();
+        }
+        // Captura alternativas simples y doble
+        if ("210".equals(Auxiliar.Campo2)) {
+            AlternativaSimple();
+        }
+        // Captura bucles
+        if ("213".equals(Auxiliar.Campo2)) {
+            bucle();
+        }
+
+        // Captura el error donde no se cierra de manera correcta la lista de Enunciado
+        // con ; = 111
+        Auxiliar = Auxiliar.NodoSig;
+        if (!"111".equals(Auxiliar.Campo2) || Auxiliar == null) {
+            System.out.println("\n" + " Error no se  cierra de manera correcta la lista de Enunciado con ; ");
+            StatusError = true;
+        }
+        // elimina ; por lista de Enunciado anidadadas
+        if ("111".equals(Auxiliar.Campo2) || Auxiliar == null) {
+            do {
+
+                Auxiliar = Auxiliar.NodoSig;
+
+            } while ("111".equals(Auxiliar.Campo2));
+        }
     }
+
+    // verifica alternativas simples y manda a metodo alternativas doble si es
+    // necesario
+    private static void AlternativaSimple() {
+    }
+
+    private static void bucle() {
+        Auxiliar = Auxiliar.NodoSig;
+        //verifica error no se inicializa correctamente una condicion (tiene que ser digito(101 NE,102 ND) o identificador(100))
+        if (!"101".equals(Auxiliar.Campo2)&&!"102".equals(Auxiliar.Campo2)&&!"100".equals(Auxiliar.Campo2)&& Auxiliar == null) {
+            System.out.println("\n" + " Error no se  inicializo correctamente la condicion ");
+            StatusError = true;
+        }
+        else{
+            condicion();
+            //verifica se declare la palabra reservada do despues de la condicion do=214
+            Auxiliar = Auxiliar.NodoSig;
+            if (!"214".equals(Auxiliar.Campo2)|| Auxiliar == null) {
+                System.out.println("\n" + " Error no se  inicializo la palabra reservada do");
+                StatusError = true;
+            }
+            else{
+                Bloque();
+            }
+        }
+        
+
+    }
+    private static void operaciones() {
+    }
+    private static void condicion() {
+    }
+
+
+
+    
 
     public static void main(String[] args) {
         NodoIni = AnalizadorLexico.ObtenerNodoIniLexemas();
@@ -192,7 +260,6 @@ public class AnalizadorSintactico {
                 System.out.println("\n" + " Error se esperar un identificador o lista de identificadores");
                 StatusError = true;
             }
-
             if (Auxiliar.Campo2 == "100") {
                 Auxiliar = Auxiliar.NodoSig;
                 // Verifica que empiece una lista de identificadores con ,=110 o se termine la
@@ -206,7 +273,6 @@ public class AnalizadorSintactico {
                     ListaIdentificadores();
 
                 }
-
                 // Captura error de terminar de manera incorrecta a orracion
                 if (Auxiliar == null || !"111".equals(Auxiliar.Campo2)) {
                     System.out.println("\n" + " Error se esperarba lista de identificadores o final de oracion con ;");

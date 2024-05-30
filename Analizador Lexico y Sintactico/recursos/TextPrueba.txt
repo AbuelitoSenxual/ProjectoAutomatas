@@ -1,1 +1,3 @@
-program fdfds; var sd,de,err,ere : integer ; var dffd,dsfsd : integer;.
+program fs ; 
+
+begin while ff < 5 end .
