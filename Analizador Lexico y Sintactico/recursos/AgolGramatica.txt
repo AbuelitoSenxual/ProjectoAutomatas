@@ -14,23 +14,19 @@ se usa para indicar fin del programa)
 
 <bloque de enunciados> ≡ begin <lista enunciados> end ,
 
-
 <lista enunciados> ≡ <Operaciones> | <lista enunciados> | <Bucles>| <Alternativas>  ;}
 
 <Operaciones> ≡ <Identificador> <Operador relacional> <Identificador|Digito> <Operador aritmetico> <Identificador|Digito> ;
-
-<Alternativas> ≡ <Alternativa Simple> | <Alternativa Doble>
 <Alternativa Simple> ≡ <if><Condicion><then><bloque de enunciados> 
 <Alternativa Doble> ≡ <if><Condicion><then><bloque de enunciados><else><bloque de enunciados>
 
-
-
 <Bucles> ≡ <While><Condicion > <Do><bloque>;
 
-<Condicion> ≡ <Identificador | Digito><Operador relacional><Identificador | Digito>;
+<Condicion> ≡ <Identificador | Digito> <Operador relacional> <Identificador | Digito>;
 
-//Bucles para que se coma los
+//Bucles para que se coma los ;
 <lista enunciados> ≡ <Operaciones> | <Asignaciones> | <lista-enunciados> | <Alternativas> | <Bucles> ;;;;
 
-program fs ; vegin while ff < 5 end .
+program fs ; 
 
+begin while ff < 5; do var sd : integer ;;  end .

@@ -1,3 +1,11 @@
-program fs ; 
 
-begin while ff < 5 end .
+program miprograma;
+var a,x,b,n : integer;
+begin
+x := a + 35;
+if x < 7 then
+begin 
+a := b + n;
+write ("escribir");
+end;
+end.
