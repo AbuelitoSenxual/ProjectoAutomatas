@@ -79,7 +79,7 @@ public class AnalizadorLexico {
         Lexema.put(".", "109");
         Lexema.put(",", "110");
         Lexema.put(";", "111");
-        Lexema.put(":", "112");
+        Lexema.put(":", "119");
         // Crear lista de Errores
         Map<String, String> Errores = new HashMap<>();
         Errores.put("500", "Se esperaba un digito");
@@ -331,7 +331,7 @@ public class AnalizadorLexico {
                             }
                             
                             if ((char) CaracterLeido != '=') {
-                                AnalizadorLexico.CrearNodo(Acumulado, "112", SaltosLinea);
+                                AnalizadorLexico.CrearNodo(Acumulado, "119", SaltosLinea);
                                 Lector.unread(CaracterLeido);
                                 Acumulado = "";
                                 break;
