@@ -1,0 +1,23 @@
+program miprograma;
+var a, x, b, n: integer;
+begin
+    x := a + 35;
+    if x < 7; then 
+    begin
+        a := 24;
+        z := 32;
+    end;
+end.
+
+
+
+/*program miprograma;*/
+/*var a,x,b,n : integer;*/
+/*begin*/
+/*x := a + 35;*/
+/*if x < 7 then*/
+/*begin */
+/*a := b + n;*/
+/*write ("escribir");*/
+/*end;*/
+/*end.*/

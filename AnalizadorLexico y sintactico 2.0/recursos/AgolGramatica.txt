@@ -9,7 +9,6 @@ se usa para indicar fin del programa)
 <Operador aritmetico> ≡  +|-|*|/
 <lista identificador> ≡ <identificador> | <lista identificador> <coma> <identificador>,
 <bloque> ≡ <definiciones> | <bloque de enunciados>,
-
 <definiciones> ≡ var <lista identificador> : <tipo> ; | <definiciones> var <lista identificador> : <tipo> ; ,<tipo> ≡ integer,
 <bloque de enunciados> ≡ begin <lista enunciados> end ,
 <lista enunciados> ≡ <Operaciones> | <Asignaciones> | <lista-enunciados> | <Alternativas> | <Bucles> ;}
@@ -20,3 +19,13 @@ se usa para indicar fin del programa)
 <Alternativa Doble> ≡ <if><Condicion><then><bloque de enunciados><else><bloque de enunciados>
 <Condicion> ≡ <Identificador | Digito><Operador relacional><Identificador | Digito>;
 <Bucles> ≡ <While><Condicion > <Do><bloque>;
+
+program miprograma;
+var a,x,b,n : integer;
+begin
+x := a + 35;;
+if x < 7; then
+begin 
+a := b + n;;
+end;
+end.
