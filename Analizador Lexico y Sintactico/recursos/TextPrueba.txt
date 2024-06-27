@@ -1,3 +1,0 @@
-program fs ; 
-
-begin while ff < 5 end .
