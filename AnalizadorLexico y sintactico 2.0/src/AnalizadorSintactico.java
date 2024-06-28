@@ -1,10 +1,14 @@
 import java.util.Arrays;
+
 public class AnalizadorSintactico {
     private static Nodo NodoIni;
     private static Nodo Auxiliar;
     private static boolean StatusError;
 
-    public static void main(String[] args) {
+   
+
+    public static void EjecutarSintatico(){
+
         NodoIni = AnalizadorLexico.ObtenerNodoIniLexemas();
         AnalizadorLexico.RecorrerTokens();
         Auxiliar = NodoIni;
@@ -14,7 +18,6 @@ public class AnalizadorSintactico {
             System.out.println("linea  " + Auxiliar.NumLinea);
             StatusError = true;
         }
-
         if (Auxiliar.Campo2 == "200") {
             Auxiliar = Auxiliar.NodoSig;
             // verifica que se iniciialize un identificador
