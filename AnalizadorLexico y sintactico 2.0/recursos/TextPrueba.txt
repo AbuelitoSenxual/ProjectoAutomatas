@@ -1,5 +1,6 @@
 program miprograma;
-var a, x, b, n: integer;
+var a, x, j, n: integer;
+var a, x, a, n: integer;
 begin
     x := a + 35;
     if x < 7; then 

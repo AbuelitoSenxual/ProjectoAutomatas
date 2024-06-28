@@ -7,9 +7,9 @@ public class AnalizadorSintactico {
 
    
 
-    public static boolean EjecutarSintatico(){
-
-        NodoIni = AnalizadorLexico.ObtenerNodoIniLexemas();
+    public static boolean EjecutarSintatico(Nodo NodoInicial){
+        NodoIni = NodoInicial;
+        
         AnalizadorLexico.RecorrerTokens();
         Auxiliar = NodoIni;
         // verificar si se empieza con program
@@ -79,7 +79,7 @@ public class AnalizadorSintactico {
                         StatusError = true;
                         }
                         else{
-                            System.out.println("\n" + "Ejecucion exitosa");
+                            System.out.println("\n" + "Ejecucion Sintatica exitosa");
                         }
                         
                        
@@ -431,9 +431,6 @@ public class AnalizadorSintactico {
             }
         }
     }
-
-
-
     private static void bucle() {
         Auxiliar = Auxiliar.NodoSig;
         

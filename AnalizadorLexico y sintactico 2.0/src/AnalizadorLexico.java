@@ -173,7 +173,7 @@ public class AnalizadorLexico {
                         }
 
                         if (!EstaEnAlfabeto((char) CaracterLeido) && !EsteaEnDigito((char) CaracterLeido)) {
-                            AnalizadorLexico.CrearNodo("ID " + Acumulado, "100", SaltosLinea);
+                            AnalizadorLexico.CrearNodo(Acumulado, "100", SaltosLinea);
 
                             Acumulado = "";
                             break;
