@@ -7,7 +7,7 @@ public class AnalizadorSintactico {
 
    
 
-    public static void EjecutarSintatico(){
+    public static boolean EjecutarSintatico(){
 
         NodoIni = AnalizadorLexico.ObtenerNodoIniLexemas();
         AnalizadorLexico.RecorrerTokens();
@@ -89,7 +89,7 @@ public class AnalizadorSintactico {
 
             }
         }
-
+        return !StatusError;
     }
 
     private static void ListaIdentificadores() {

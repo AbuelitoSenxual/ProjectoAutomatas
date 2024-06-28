@@ -1,0 +1,56 @@
+
+QUE NO SE REPITA LA PALABRA RECERVADA PARA EL PROGRAMA(miprograma)
+COMPATIBILIDAD CON TIPOS DE DATOS (string integer real boolean)
+COMPATIBILIDAD CON TIPO DE OPERANDO
+
+program miprograma;
+var a, x, b, n: integer;
+begin
+    x := a + 35/b + "hg";
+    if x < 7; then 
+    begin
+        a := 24;
+        z := 32;
+    end;
+end.
+
+Palabra reservada program  200  Linea:1
+ID miprograma  100  Linea:1
+;  111  Linea:1
+Palabra reservada var  201  Linea:2
+ID a  100  Linea:2
+,  110  Linea:2
+ID x  100  Linea:2
+,  110  Linea:2
+ID b  100  Linea:2
+,  110  Linea:2
+ID n  100  Linea:2
+:  119  Linea:2
+Palabra reservada integer  203  Linea:2
+;  111  Linea:2
+Palabra reservada begin  206  Linea:3
+ID x  100  Linea:4
+:=  118  Linea:4
+ID a  100  Linea:4
++  103  Linea:4
+NE 35  101  Linea:4
+;  111  Linea:4
+Palabra reservada if  210  Linea:5
+ID x  100  Linea:5
+<   112  Linea:5
+NE 7  101  Linea:5
+;  111  Linea:5
+Palabra reservada then  211  Linea:5
+Palabra reservada begin  206  Linea:6
+ID a  100  Linea:7
+:=  118  Linea:7
+NE 24  101  Linea:7
+;  111  Linea:7
+ID z  100  Linea:8
+:=  118  Linea:8
+NE 32  101  Linea:8
+;  111  Linea:8
+Palabra reservada end  207  Linea:9
+;  111  Linea:9
+Palabra reservada end  207  Linea:10
+.  109  Linea:10
