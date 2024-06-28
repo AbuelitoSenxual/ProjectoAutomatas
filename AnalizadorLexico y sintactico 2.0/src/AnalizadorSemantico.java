@@ -21,6 +21,15 @@ public class AnalizadorSemantico {
             if ("201".equals(Aux.Campo2)&& StatusError!=true) {
                 definicion();
             }
+            //Captura el caso donde incie una operacion(con un identificador)
+            if ("100".equals(Aux.Campo2)&& StatusError!=true) {
+                //captura el caso donde no este incializada 
+                if (ExisteID(Aux.Token)!=true) {
+                    StatusError = true;
+                    System.out.println("Error Semantico no se a inicializado la variable");
+                    break;
+                }
+            }
             
         } while (Aux!=null && StatusError!=true) ;
     }

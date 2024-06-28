@@ -1,8 +1,7 @@
 program miprograma;
 var a, x, j, n: integer;
-var a, x, a, n: integer;
 begin
-    x := a + 35;
+    g := a + 35;
     if x < 7; then 
     begin
         a := 24;
