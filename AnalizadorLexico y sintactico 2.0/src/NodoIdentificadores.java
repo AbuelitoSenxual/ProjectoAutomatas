@@ -1,7 +1,7 @@
 public class NodoIdentificadores {
-    String Nombre;
-    String TipoDato;
-    Object Valor;
+    String Nombre;//x,y,z
+    String TipoDato;// integer , real , boolean
+    Object Valor;// "hola" , true , 4 , 45.2
     NodoIdentificadores SigIdentificador;
     
     

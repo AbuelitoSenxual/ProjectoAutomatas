@@ -136,12 +136,12 @@ public class AnalizadorLexico {
 
                         if (!".".equals((char) CaracterLeido) && !EsteaEnDigito((char) CaracterLeido)) {
                             if (NumeroRacional) {
-                                AnalizadorLexico.CrearNodo("NR " + Acumulado, "102", SaltosLinea);
+                                AnalizadorLexico.CrearNodo(Acumulado, "102", SaltosLinea);
                                 Acumulado = "";
                                 break;
                             }
                             if (!NumeroRacional) {
-                                AnalizadorLexico.CrearNodo("NE " + Acumulado, "101", SaltosLinea);
+                                AnalizadorLexico.CrearNodo(Acumulado, "101", SaltosLinea);
                                 Acumulado = "";
                                 break;
                             }
@@ -190,7 +190,7 @@ public class AnalizadorLexico {
                         SaltosLinea++;
                     }
                     if (((char) CaracterLeido) != '*') {
-                        AnalizadorLexico.CrearNodo("Op Arit /", "106", SaltosLinea);
+                        AnalizadorLexico.CrearNodo("/", "106", SaltosLinea);
                         Acumulado = "";
                     }
                     if ('*' == ((char) CaracterLeido)) {
