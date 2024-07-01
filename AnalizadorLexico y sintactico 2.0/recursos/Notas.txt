@@ -3,7 +3,7 @@ QUE NO SE REPITA LA PALABRA RECERVADA PARA EL PROGRAMA(miprograma)
 COMPATIBILIDAD CON TIPOS DE DATOS (string integer real boolean)
 COMPATIBILIDAD CON TIPO DE OPERANDO
 
-program miprograma;
+  miprograma;
 var a, x, b, n: integer;
 begin
     x := a + 35/b + "hg";

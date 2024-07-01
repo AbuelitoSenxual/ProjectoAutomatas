@@ -13,7 +13,6 @@ public class AnalizadorSemantico {
 
     public static void main(String[] args) {
         NodoIni = AnalizadorLexico.ObtenerNodoIniLexemas();
-        AnalizadorLexico.RecorrerTokens();
         /// retorna un true si la ejecuccion fue exitosa
         Aux = NodoIni.NodoSig;
         NodoIdentificadores AuxiliarIdentificador = CabezaIdentificadores; 
@@ -41,6 +40,10 @@ public class AnalizadorSemantico {
                     Aux = Aux.NodoSig;
                     VerificarNull();
                     AuxiliarIdentificador.Valor = Operacion(AuxiliarIdentificador.TipoDato);
+
+                    if (StatusError!=true) {
+                        ImprimirIdentificadores();
+                    }
                 }
             }
             
@@ -147,8 +150,6 @@ public class AnalizadorSemantico {
         return Valor;
     }
 
-
-
     public static Object OperacionInteger(){
         String operacion="";
         Object Valor=null;
@@ -195,7 +196,8 @@ public class AnalizadorSemantico {
         // 111 es el punto y coma ;
         if (!StatusError) {
             try {
-                Valor = engine.eval(operacion);
+                Valor = (int)engine.eval(operacion);
+                
             } catch (ScriptException e) {
                 StatusError = true;
                 System.out.println("Error evaluando la operación: " + operacion);
@@ -234,4 +236,17 @@ public class AnalizadorSemantico {
             
         } while (StatusError);
     }
+
+    public static void ImprimirIdentificadores(){
+        NodoIdentificadores AuxiliarIdentificador = CabezaIdentificadores;
+
+        while (AuxiliarIdentificador!=null) {
+            System.out.println("Identificador:"+AuxiliarIdentificador.Nombre+" TipoDato:"+AuxiliarIdentificador.TipoDato
+                                + " Valore:"+AuxiliarIdentificador.Valor
+            );
+            AuxiliarIdentificador = AuxiliarIdentificador.SigIdentificador;
+        }
+
+    }
+
 }

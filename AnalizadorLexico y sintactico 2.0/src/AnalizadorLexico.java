@@ -1,6 +1,6 @@
 import java.util.HashMap;
 import java.util.Map;
-import javafx.scene.chart.Chart;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -192,6 +192,8 @@ public class AnalizadorLexico {
                     if (((char) CaracterLeido) != '*') {
                         AnalizadorLexico.CrearNodo("/", "106", SaltosLinea);
                         Acumulado = "";
+                        Lector.unread(CaracterLeido);
+
                     }
                     if ('*' == ((char) CaracterLeido)) {
                         Acumulado = Acumulado + ((char) CaracterLeido);
