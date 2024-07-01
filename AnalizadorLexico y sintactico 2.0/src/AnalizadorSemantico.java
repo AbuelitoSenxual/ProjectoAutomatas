@@ -17,10 +17,10 @@ public class AnalizadorSemantico {
         Aux = NodoIni.NodoSig;
         NodoIdentificadores AuxiliarIdentificador = CabezaIdentificadores; 
         NombrePrograma = Aux.Token;
-
+        Aux = Aux.NodoSig;
         // ID 100 , palabra reservada var 201
         do {
-            Aux = Aux.NodoSig;
+            
             //Captura el caso donde se incialice una lista de variables
             if ("201".equals(Aux.Campo2)&& StatusError!=true) {
                 definicion();
