@@ -46,7 +46,7 @@ public class AnalizadorSemantico {
                     }
                 }
             }
-            
+            Aux = Aux.NodoSig;
         } while (Aux!=null && StatusError!=true) ;
     }
 
