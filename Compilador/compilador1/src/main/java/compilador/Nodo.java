@@ -1,3 +1,4 @@
+package compilador;
 public class Nodo {
     String Token;
     String Campo2;

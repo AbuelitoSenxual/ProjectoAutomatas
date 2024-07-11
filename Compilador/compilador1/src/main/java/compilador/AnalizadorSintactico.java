@@ -1,3 +1,4 @@
+package compilador;
 import java.util.Arrays;
 
 public class AnalizadorSintactico {

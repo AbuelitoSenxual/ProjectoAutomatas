@@ -1,3 +1,4 @@
+package compilador;
 public class NodoIdentificadores {
     String Nombre;//x,y,z
     String TipoDato;// integer , real , boolean

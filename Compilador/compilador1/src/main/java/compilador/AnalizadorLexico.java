@@ -1,3 +1,4 @@
+package compilador;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,7 +9,7 @@ import java.io.PushbackReader;
 
 public class AnalizadorLexico {
     public static Nodo NodoIni = null;
-    public static String RutaTxt = "recursos\\TextPrueba.txt";
+    public static String RutaTxt = "compilador1\\src\\main\\resources\\TextPrueba.txt";
 
     private static boolean EstaEnAlfabeto(char caracter) {
         if (Character.isLetter(caracter)) {
