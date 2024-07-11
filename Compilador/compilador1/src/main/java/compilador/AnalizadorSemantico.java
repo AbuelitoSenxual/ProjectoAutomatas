@@ -42,9 +42,7 @@ public class AnalizadorSemantico {
                     VerificarNull();
                     AuxiliarIdentificador.Valor = Operacion(AuxiliarIdentificador.TipoDato);
 
-                    if (StatusError!=true) {
-                        ImprimirIdentificadores();
-                    }
+                    
                 }
             }
             Aux = Aux.NodoSig;
@@ -198,6 +196,9 @@ public class AnalizadorSemantico {
         if (!StatusError) {
             try {
                 Valor = (int)engine.eval(operacion);
+                if (StatusError!=true) {
+                    ImprimirIdentificadores();
+                }
                 
             } catch (ScriptException e) {
                 StatusError = true;
@@ -242,12 +243,13 @@ public class AnalizadorSemantico {
         NodoIdentificadores AuxiliarIdentificador = CabezaIdentificadores;
 
         while (AuxiliarIdentificador!=null) {
-            System.out.println("Identificador:"+AuxiliarIdentificador.Nombre+" TipoDato:"+AuxiliarIdentificador.TipoDato
+            String tipoDato= AnalizadorLexico.palabrasReservadas.inverse().get(AuxiliarIdentificador.TipoDato);
+            System.out.println("Identificador:"+AuxiliarIdentificador.Nombre+" TipoDato:"+tipoDato
                                 + " Valore:"+AuxiliarIdentificador.Valor
             );
             AuxiliarIdentificador = AuxiliarIdentificador.SigIdentificador;
         }
-
+        System.out.println();
     }
 
 }

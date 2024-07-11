@@ -2,6 +2,9 @@ package compilador;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -10,6 +13,15 @@ import java.io.PushbackReader;
 public class AnalizadorLexico {
     public static Nodo NodoIni = null;
     public static String RutaTxt = "compilador1\\src\\main\\resources\\TextPrueba.txt";
+
+    // Crear (biMap) lista de Palabras receravadas
+    public static BiMap<String, String> palabrasReservadas = HashBiMap.create();
+    
+    // Crear (biMap) lista de Lexema Simples (1 Caracter)
+    public static Map<String, String> Lexema = new HashMap<>();
+    
+    // Crear (biMap) lista de Errores
+    public static Map<String, String> Errores = new HashMap<>();
 
     private static boolean EstaEnAlfabeto(char caracter) {
         if (Character.isLetter(caracter)) {
@@ -50,8 +62,7 @@ public class AnalizadorLexico {
     }
 
     public static Nodo ObtenerNodoIniLexemas() {
-        // Crear lista de Palabras receravadas
-        Map<String, String> palabrasReservadas = new HashMap<>();
+        // Inicializa lista de Palabras receravadas
         palabrasReservadas.put("program", "200");
         palabrasReservadas.put("var", "201");
         palabrasReservadas.put("string", "202");
@@ -70,8 +81,7 @@ public class AnalizadorLexico {
         palabrasReservadas.put("or", "215");
         palabrasReservadas.put("and", "216");
         palabrasReservadas.put("not", "217");
-        // Crear lista de Lexema Simples (1 Caracter)
-        Map<String, String> Lexema = new HashMap<>();
+        // Inicializa lista de Lexema Simples (1 Caracter)
         Lexema.put("+", "103");
         Lexema.put("-", "104");
         Lexema.put("*", "105");
@@ -81,11 +91,12 @@ public class AnalizadorLexico {
         Lexema.put(",", "110");
         Lexema.put(";", "111");
         Lexema.put(":", "119");
-        // Crear lista de Errores
+        // Inicializa lista de Errores
         Map<String, String> Errores = new HashMap<>();
         Errores.put("500", "Se esperaba un digito");
         Errores.put("501", "Cierre inesperado de comentario");
         Errores.put("502", "Se esperaba un =");
+        
         int CaracterLeido;
         String Acumulado = "";
         int SaltosLinea = 1;
