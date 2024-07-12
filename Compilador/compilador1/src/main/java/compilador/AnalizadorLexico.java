@@ -12,7 +12,7 @@ import java.io.PushbackReader;
 
 public class AnalizadorLexico {
     public static Nodo NodoIni = null;
-    public static String RutaTxt = "compilador1\\src\\main\\resources\\TextPrueba.txt";
+    public static String RutaTxt = "src\\main\\resources\\TextPrueba.txt";
 
     // Crear (biMap) lista de Palabras receravadas
     public static BiMap<String, String> palabrasReservadas = HashBiMap.create();

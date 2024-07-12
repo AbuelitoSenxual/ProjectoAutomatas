@@ -209,7 +209,6 @@ public class AnalizadorSemantico {
         return Valor;
     }
 
-
     public static Object OperacionReal(){
         Object Valor = null;
         return Valor;
