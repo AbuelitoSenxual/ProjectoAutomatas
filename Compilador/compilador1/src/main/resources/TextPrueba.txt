@@ -3,10 +3,9 @@ var a, x, j, n,z: integer;
 begin
     a := 24;
     j :=  4;
-    a := j*2 + 35/5;
-    a := 24;
-    z := 32/a-7 ;
-    z := 32+45*a;
+    a := j*2;
+    z := a/j ;
+    z := 32*a;
     if x < 7; then 
     begin
         a := 24;
