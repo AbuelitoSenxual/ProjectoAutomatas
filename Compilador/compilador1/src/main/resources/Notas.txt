@@ -1,18 +1,11 @@
 
-QUE NO SE REPITA LA PALABRA RECERVADA PARA EL PROGRAMA(miprograma)
-COMPATIBILIDAD CON TIPOS DE DATOS (string integer real boolean)
-COMPATIBILIDAD CON TIPO DE OPERANDO
+var a, x, j, n,z: integer;
 
-  miprograma;
-var a, x, b, n: integer;
-begin
-    x := a + 35/b + "hg";
-    if x < 7; then 
-    begin
-        a := 24;
-        z := 32;
-    end;
-end.
+    j :=  4;
+    a := j + 35;
+    a := 24;
+    z := 32;
+
 
 Palabra reservada program  200  Linea:1
 ID miprograma  100  Linea:1

@@ -11,7 +11,7 @@ public class AnalizadorSemantico {
     static Nodo Aux;
     static boolean StatusError;
     static NodoIdentificadores CabezaIdentificadores;
-
+    static String ContadorEtiqueta;
     public static void main(String[] args) {
         NodoIni = AnalizadorLexico.ObtenerNodoIniLexemas();
         /// retorna un true si la ejecuccion fue exitosa
@@ -28,7 +28,10 @@ public class AnalizadorSemantico {
             }
             //Captura el caso donde incie una operacion(con un identificador)
             if ("100".equals(Aux.Campo2)&& StatusError!=true) {
-                //captura el caso donde no exita la variable
+                //Verifica que la operacion inicie de manera correcta con := 118
+                Nodo Aux2 = Aux.NodoSig;
+                if ("118".equals(Aux2.Campo2)&& StatusError!=true) {
+                    //captura el caso donde no exita la variable
                 if (ExisteID(Aux.Token)!=true) {
                     StatusError = true;
                     System.out.println("Error Semantico no se a inicializado la variable: " + Aux.Token);
@@ -42,7 +45,12 @@ public class AnalizadorSemantico {
                     VerificarNull();
                     AuxiliarIdentificador.Valor = Operacion(AuxiliarIdentificador.TipoDato);
 
+                    if (StatusError!=true) {
+                        ImprimirIdentificadores();
+                    }
+
                     
+                }
                 }
             }
             Aux = Aux.NodoSig;
@@ -196,9 +204,7 @@ public class AnalizadorSemantico {
         if (!StatusError) {
             try {
                 Valor = (int)engine.eval(operacion);
-                if (StatusError!=true) {
-                    ImprimirIdentificadores();
-                }
+                
                 
             } catch (ScriptException e) {
                 StatusError = true;
@@ -237,7 +243,6 @@ public class AnalizadorSemantico {
             
         } while (StatusError);
     }
-
     public static void ImprimirIdentificadores(){
         NodoIdentificadores AuxiliarIdentificador = CabezaIdentificadores;
 
