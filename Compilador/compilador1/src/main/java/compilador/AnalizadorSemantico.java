@@ -1,6 +1,10 @@
 package compilador;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
@@ -59,8 +63,14 @@ public class AnalizadorSemantico {
             }
             Aux = Aux.NodoSig;
         } while (Aux != null && StatusError != true);
-        System.out.println(convertirATresDirecciones(CadenaOperaciones));
-
+        String entrada = CadenaOperaciones;
+        List<String> instrucciones = parseEntrada(entrada);
+        List<String> codigoTresDirecciones = generarTresDirecciones(instrucciones);
+        
+        // Imprimir el resultado
+        for (String linea : codigoTresDirecciones) {
+            System.out.println(linea);
+        }
     }
 
     public static Object OperacionInteger() {
@@ -124,54 +134,48 @@ public class AnalizadorSemantico {
 
 
     
-    public static String convertirATresDirecciones(String cadena) {
-        StringBuilder codigoTresDirecciones = new StringBuilder();
-        
-        // Separar las instrucciones por ;
-        String[] instrucciones = cadena.split(";");
-        
-        int contadorTemporal = 1; // Contador para generar nombres únicos para temporales
-        
-        for (String instruccion : instrucciones) {
-            // Limpiar espacios en blanco alrededor de la instrucción
-            instruccion = instruccion.trim();
-            
-            if (instruccion.isEmpty()) {
-                continue; // Si es una línea vacía, pasar a la siguiente
-            }
-            
-            // Separar por el operador =
-            String[] partes = instruccion.split("=");
-            
-            // Si la instrucción no tiene el operador = correctamente, continuar con la siguiente instrucción
-            if (partes.length != 2) {
-                continue;
-            }
-            
-            // Primer parte es la variable a asignar
-            String variable = partes[0].trim();
-            
-            // Segunda parte es la expresión
-            String expresion = partes[1].trim();
-            
-            // Verificar si la expresión es una asignación directa o una operación
-            if (expresion.matches("\\d+")) {
-                // Es una asignación directa de valor entero
-                codigoTresDirecciones.append(variable).append(" = ").append(expresion).append("\n");
-            } else {
-                // Es una operación que requiere temporales
-                // Generar un nombre único para la temporal
-                String temporal = "t" + contadorTemporal++;
-                codigoTresDirecciones.append(temporal).append(" = ").append(expresion).append("\n");
-                codigoTresDirecciones.append(variable).append(" = ").append(temporal).append("\n");
+   // Método para parsear la entrada y obtener las instrucciones
+    public static List<String> parseEntrada(String entrada) {
+        // Eliminar espacios en blanco y separar por ';'
+        String[] partes = entrada.trim().split(";");
+        List<String> instrucciones = new ArrayList<>();
+        for (String parte : partes) {
+            if (!parte.trim().isEmpty()) {
+                instrucciones.add(parte.trim());
             }
         }
-        
-        return codigoTresDirecciones.toString();
+        return instrucciones;
     }
-    
 
+    // Método para generar código de tres direcciones a partir de las instrucciones
+    public static List<String> generarTresDirecciones(List<String> instrucciones) {
+        List<String> codigoTresDirecciones = new ArrayList<>();
+        Map<String, String> variables = new HashMap<>();
+        int tempCount = 1;
 
+        for (String instruccion : instrucciones) {
+            // Separar la instrucción en el lado izquierdo y el lado derecho del '='
+            String[] partes = instruccion.split("=");
+            String izquierda = partes[0].trim();
+            String derecha = partes[1].trim();
+
+            // Generar un nombre temporal
+            String temp = "t" + tempCount++;
+
+            // Reemplazar nombres de variables por temporales
+            for (Map.Entry<String, String> entry : variables.entrySet()) {
+                derecha = derecha.replaceAll("\\b" + entry.getKey() + "\\b", entry.getValue());
+            }
+
+            // Guardar el valor calculado en una variable temporal
+            codigoTresDirecciones.add(temp + " = " + derecha);
+
+            // Actualizar el valor de la variable en el mapa
+            variables.put(izquierda, temp);
+        }
+
+        return codigoTresDirecciones;
+    }
 
 
 
