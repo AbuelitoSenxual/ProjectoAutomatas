@@ -51,13 +51,13 @@ public class AnalizadorSemantico {
                         // Se avanza al siguiente token despues del identificador (:=)
                         Aux = Aux.NodoSig;
                         VerificarNull();
-                        CadenaOperaciones = CadenaOperaciones +AuxiliarIdentificador.Nombre + " = ";
+                        CadenaOperaciones = CadenaOperaciones + AuxiliarIdentificador.Nombre + " = ";
                         AuxiliarIdentificador.Valor = Operacion(AuxiliarIdentificador.TipoDato);
 
                         if (StatusError != true) {
                             ImprimirIdentificadores();
                         }
-                        
+
                     }
                 }
             }
@@ -66,7 +66,7 @@ public class AnalizadorSemantico {
         String entrada = CadenaOperaciones;
         List<String> instrucciones = parseEntrada(entrada);
         List<String> codigoTresDirecciones = generarTresDirecciones(instrucciones);
-        
+
         // Imprimir el resultado
         for (String linea : codigoTresDirecciones) {
             System.out.println(linea);
@@ -119,8 +119,14 @@ public class AnalizadorSemantico {
         // 111 es el punto y coma ;
         if (!StatusError) {
             try {
-                Valor = (int) engine.eval(operacion);
+                Object result = engine.eval(operacion);
 
+                // Convertir el resultado según sea necesario
+                if (result instanceof Integer) {
+                    Valor = result;
+                } else if (result instanceof Double) {
+                    Valor = ((Double) result).intValue(); // Convertir Double a Integer
+                }
             } catch (ScriptException e) {
                 StatusError = true;
                 System.out.println("Error evaluando la operación: " + operacion);
@@ -130,11 +136,7 @@ public class AnalizadorSemantico {
         return Valor;
     }
 
-
-
-
-    
-   // Método para parsear la entrada y obtener las instrucciones
+    // Método para parsear la entrada y obtener las instrucciones
     public static List<String> parseEntrada(String entrada) {
         // Eliminar espacios en blanco y separar por ';'
         String[] partes = entrada.trim().split(";");
@@ -176,13 +178,6 @@ public class AnalizadorSemantico {
 
         return codigoTresDirecciones;
     }
-
-
-
-
-
-
-
 
     public static boolean ExisteID(String ID) {
         NodoIdentificadores AuxiliarIdentificador = CabezaIdentificadores;

@@ -5,7 +5,7 @@ begin
     j :=  4;
     a := j*2 + 35/5;
     a := 24;
-    z := 32;
+    z := 32/a-7 ;
     z := 32+45*a;
     if x < 7; then 
     begin
