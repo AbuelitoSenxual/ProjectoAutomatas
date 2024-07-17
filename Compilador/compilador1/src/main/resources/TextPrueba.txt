@@ -1,24 +1,14 @@
 program miprograma;
 var a, x, j, n,z: integer;
 begin
-    a := 24;
     j :=  4;
-    a := j*2;
-    z := a/j ;
-    z := 32*a;
+    a := j + 35;
     if x < 7; then 
     begin
         a := 24;
         z := 32;
     end;
 end.
-
-
-
-
-
-
-
 
 
 
