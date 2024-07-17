@@ -12,7 +12,8 @@ public class AnalizadorSemantico {
     static boolean StatusError;
     static NodoIdentificadores CabezaIdentificadores;
 
-    public static void main(String[] args) {
+    public static void AnalisisSemantico(){
+
         NodoIni = AnalizadorLexico.ObtenerNodoIniLexemas();
         /// retorna un true si la ejecuccion fue exitosa
         Aux = NodoIni.NodoSig;

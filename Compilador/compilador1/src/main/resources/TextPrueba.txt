@@ -8,6 +8,8 @@ begin
         a := 24;
         z := 32;
     end;
+    j :=  4;
+    a := j + 35;
 end.
 
 

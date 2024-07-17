@@ -176,7 +176,7 @@ public class AnalizadorLexico {
                                 Acumulado = Acumulado + ((char) CaracterLeido);
                             }
                             if (palabrasReservadas.get(Acumulado) != null) {
-                                AnalizadorLexico.CrearNodo("Palabra reservada " + Acumulado, (palabrasReservadas.get(Acumulado)), SaltosLinea);
+                                AnalizadorLexico.CrearNodo(Acumulado, (palabrasReservadas.get(Acumulado)), SaltosLinea);
 
                                 Acumulado = "";
                                 break;
