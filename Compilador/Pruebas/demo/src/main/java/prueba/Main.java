@@ -14,7 +14,9 @@ public class Main {
 
     public static void main(String[] args) {
 
-        String operacion = "j:=445+b/45";
+        String operacion = "j:=445";
+   
+        
         Operaciones(operacion);
 
     }
@@ -29,7 +31,7 @@ public class Main {
 
         // convierte la operacion en un array list de caracteres
         ArrayList<String> Operacion = GenerarListaOperaciones(CadenaOP);
-        
+
         // optiene el Primera valor de el array (EL identificador resultado)
         Resultado = String.valueOf(Operacion.get(0));
         // elimina el ID := de la lista
@@ -39,8 +41,9 @@ public class Main {
         if (Operacion.size() == 1) {
             System.out.println(String.format("(assign , %s , - , %s)", Operacion.get(0), Resultado));
         }
-        // Ubicar idice del elemento pivote que dara origen a la operacion Izquierda y derecha
-        char[] operadores = { '*', '/', '+', '-' };
+        // Ubicar idice del elemento pivote que dara origen a la operacion Izquierda y
+        // derecha
+        char[] operadores = { '+', '-', '*', '/' };
         for (char operador : operadores) {
             int indice = Operacion.indexOf(operador);
             if (indice != -1) {
@@ -50,46 +53,49 @@ public class Main {
             }
         }
 
-        //Separa la operacion en Izquiero 
-        if (Operacion.subList(0, IndiceOperador).size()==1) {
-            //caso donde solo sea  un elemento osea una igualcion 
+        // Separa la operacion en Izquiero
+        if (Operacion.subList(0, IndiceOperador).size() == 1) {
+            // caso donde solo sea un elemento osea una igualcion
             OpIzq = Operacion.subList(0, IndiceOperador).toString();
-        }
-        else{
-            //dado caso que sea mas grande que 1 elemento osea una operacion
-            OpIzq = "T"+CountEtiq+":=";
+        } else {
+            // dado caso que sea mas grande que 1 elemento osea una operacion
+            OpIzq = "T" + CountEtiq + ":=";
             CountEtiq++;
             OpIzq += Operacion.subList(0, IndiceOperador).toString();
 
-        };
-
-
-        //Separa la operacion derecha
-        if (Operacion.subList(IndiceOperador+1, Operacion.size()).size()==1) {
-            //caso donde solo sea  un elemento osea una igualcion 
-            OpIzq = Operacion.subList(IndiceOperador+1, Operacion.size()).toString();
         }
-        else{
-            //dado caso que sea mas grande que 1 elemento osea una operacion
-            OpIzq = "T"+CountEtiq+":=";
+        ;
+
+        // Separa la operacion derecha
+        if (Operacion.subList(IndiceOperador + 1, Operacion.size()).size() == 1) {
+            // caso donde solo sea un elemento osea una igualcion
+            OpIzq = Operacion.subList(IndiceOperador + 1, Operacion.size()).toString();
+        } else {
+            // dado caso que sea mas grande que 1 elemento osea una operacion
+            OpIzq = "T" + CountEtiq + ":=";
             CountEtiq++;
             OpIzq += Operacion.subList(0, IndiceOperador).toString();
 
-        };
+        }
+        ;
 
-        
     }
-     public static ArrayList<String> GenerarListaOperaciones(String operation) {
+
+    public static ArrayList<String> GenerarListaOperaciones(String operation) {
         ArrayList<String> elements = new ArrayList<>();
-        
+
         // Expresión regular para encontrar números y operadores
         Pattern pattern = Pattern.compile("\\d+|\\D");
         Matcher matcher = pattern.matcher(operation);
-        
+
         while (matcher.find()) {
             elements.add(matcher.group());
         }
-        
+
         return elements;
     }
+
+
+
+
 }

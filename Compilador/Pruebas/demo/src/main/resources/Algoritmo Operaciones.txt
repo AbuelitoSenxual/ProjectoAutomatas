@@ -6,18 +6,17 @@ si lo es imprime el resultado nada mas
 
 
 buscar elemento pivote 
+nivel 1 (-,+) izquierda a derecha 
+nivel 2 (*,/) izquierda a derecha 
 
 almacena pivote como operador 
 
-nivel 1 (-,+)
-nivel 2 (*,/)
+//OPTIMIZACION
 
-
-
-
-
+//	
 crear hijo izquierda y derecha con sus etiquetas siempre que no sea una asignacion 
 en el dado caso que sea una asignacion almacena el valor al hijo directamente 
+
 
 imprime hijos con etiquetas 
 
