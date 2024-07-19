@@ -1,0 +1,37 @@
+*almacena la cadena como listaArray de carracteres
+*almacenar el identificador del resultado 
+	
+*verificar que no sea una asignacion
+si lo es imprime el resultado nada mas
+
+
+buscar elemento pivote 
+
+almacena pivote como operador 
+
+nivel 1 (-,+)
+nivel 2 (*,/)
+
+
+
+
+
+crear hijo izquierda y derecha con sus etiquetas siempre que no sea una asignacion 
+en el dado caso que sea una asignacion almacena el valor al hijo directamente 
+
+imprime hijos con etiquetas 
+
+
+genera una etiqueta para el resultado
+
+
+plantea resultado con el pivote (hijo izq pivote hijo derecha)
+
+analiza izq(Se llama a si mismo) en el dado caso que sean mas de 3 elementos
+analiza derecha(Se llama a si mismo) en el dado caso que sean mas de 3 elementos
+
+
+
+asigna resultado a la variable 
+
+

@@ -6,7 +6,7 @@ public class CodigoIntermedio {
 
     static Nodo NodoIni;
     static Nodo Aux;
-    static int ContadorEtiquetas=1;
+    static int ContadorEtiquetasTemp=1;
     static int ContadorSalidaCodigo=1;
     static NodoIdentificadores IdentificadorInicial;
 
@@ -34,16 +34,25 @@ public class CodigoIntermedio {
             }
             //Captura el caso donde encuentre una condicional 210 if
             if ("210".equals(Aux.Campo2)) {
-                //imprime todos la condiiconal al encontrar un ; 
-                do {
-                    System.out.print(Aux.Token + " ");
-                    Aux = Aux.NodoSig;
-                } while (!"111".equals(Aux.Campo2));
-                System.out.println();
-                System.out.println("L"+ContadorSalidaCodigo+":");
+                String Arg1,Arg2;
+                String OpBooleano;
+                //Almacena los elementos de la operacion booleanad del if
+                Aux = Aux.NodoSig;
+                Arg1 =Aux.Token;
+                Aux = Aux.NodoSig;
+                OpBooleano = Aux.Token;
+                Aux = Aux.NodoSig;
+                Arg2 =Aux.Token;
+
+                System.out.println(String.format("(%s , %s , %s , T%d)", OpBooleano,Arg1,Arg2,ContadorEtiquetasTemp));
+                System.out.println(String.format("(if_False , T%d , - , L%d)", ContadorEtiquetasTemp,ContadorSalidaCodigo+1));
+                System.out.println(String.format("(label, L%d , - , -)", ContadorSalidaCodigo));
+                ContadorEtiquetasTemp++;
                 ContadorSalidaCodigo++;
                 GenerarCodigoIntermedio();
-                System.out.println("L"+ContadorSalidaCodigo+":");
+                System.out.println(String.format(("(goto , - , - , L%d"), ContadorSalidaCodigo));
+                System.out.println(String.format("(label, L%d , - , -)", ContadorSalidaCodigo));
+                ContadorSalidaCodigo++;
             }                                                       
 
             // Cptura el caso donde se termine el bloque de enunciados END 207
@@ -56,7 +65,7 @@ public class CodigoIntermedio {
         } while (Aux != null);
     }
 
-    public static void definicion(){
+    public static void definicion(){  
         ArrayList<String> ListaIdentificadores = new ArrayList<String>();
         String TipoDato="";
 
@@ -71,15 +80,16 @@ public class CodigoIntermedio {
             // ES : (LE sigue el tipo de datos)
             if ("119".equals(Aux.Campo2)) {
                 Aux= Aux.NodoSig;
-                TipoDato = Aux.Campo2;
+                TipoDato = AnalizadorLexico.palabrasReservadas.inverse().get(Aux.Campo2);
                 break;
             }
         } while (!"119".equals(Aux.Campo2));
         //Rellena lista de identificadores
         for(String identificador :ListaIdentificadores){
             AnalizadorSemantico.añadirNodoIdenticador( identificador, TipoDato, null);
+            System.out.println(String.format("(Declare , %s , %s , -)", TipoDato,identificador));
         }
-
+        System.out.println();
     }
     public static void añadirNodoIdenticador(String nombre, String tipoDato, Object valor) {
         NodoIdentificadores nuevoNodo = new NodoIdentificadores(nombre, tipoDato, valor);
