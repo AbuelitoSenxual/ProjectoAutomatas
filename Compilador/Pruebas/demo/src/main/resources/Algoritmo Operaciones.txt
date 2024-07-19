@@ -6,8 +6,8 @@ si lo es imprime el resultado nada mas
 
 
 buscar elemento pivote 
-nivel 1 (-,+) izquierda a derecha 
-nivel 2 (*,/) izquierda a derecha 
+nivel 1 (-,+) derecha  a izquierda 
+nivel 2 (*,/) derecha  a izquierda 
 
 almacena pivote como operador 
 
