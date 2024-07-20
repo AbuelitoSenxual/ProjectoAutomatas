@@ -13,7 +13,7 @@ almacena pivote como operador
 
 //OPTIMIZACION
 
-//	
+//OPTIMIZACION	
 crear hijo izquierda y derecha con sus etiquetas siempre que no sea una asignacion 
 en el dado caso que sea una asignacion almacena el valor al hijo directamente 
 
