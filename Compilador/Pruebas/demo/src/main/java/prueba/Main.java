@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import main.java.prueba.Cuartetos;
+
 
 // a:=j+35;
 // j:=4;
@@ -196,8 +196,19 @@ public class Main {
 
         // asigna valores a los argumentos
         Cuarteto.Operador = Operador;
-        Cuarteto.Argumento1 = OpIzq.get(0);
-        Cuarteto.Argumento2 = OpDer.get(0);
+        if (OpIzq.size()==1) {
+            Cuarteto.Argumento1 = OpIzq.get(0);
+        }
+        else{
+            Cuarteto.Argumento1 = OpIzq.get(0)+OpIzq.get(1);
+        }
+        if (OpDer.size()==1) {
+            Cuarteto.Argumento1 = OpDer.get(0);
+        }
+        else{
+            Cuarteto.Argumento1 = OpDer.get(0)+OpDer.get(1);
+        }
+
         // Planteamos la operacionc con temporal
         if (Resultado.indexOf("t") != -1) {
             Cuarteto.Resultado = Resultado;

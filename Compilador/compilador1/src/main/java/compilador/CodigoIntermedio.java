@@ -14,7 +14,7 @@ public class CodigoIntermedio {
 
     public static void main(String[] args) {
 
-        AnalizadorSemantico.AnalisisSemantico();
+        
         NodoIni = AnalizadorLexico.ObtenerNodoIniLexemas();
         Aux = NodoIni.NodoSig.NodoSig;
 
@@ -55,13 +55,13 @@ public class CodigoIntermedio {
                 Arg2 =Aux.Token;
 
                 System.out.println(String.format("(%s , %s , %s , T%d)", OpBooleano,Arg1,Arg2,ContadorEtiquetasTemp));
-                System.out.println(String.format("(if_False , T%d , - , L%d)", ContadorEtiquetasTemp,ContadorSalidaCodigo+1));
-                System.out.println(String.format("(label, L%d , - , -)", ContadorSalidaCodigo));
+                System.out.println(String.format("(if_False , T%d , null , L%d)", ContadorEtiquetasTemp,ContadorSalidaCodigo+1));
+                System.out.println(String.format("(label, L%d , null , null)", ContadorSalidaCodigo));
                 ContadorEtiquetasTemp++;
                 ContadorSalidaCodigo++;
                 GenerarCodigoIntermedio();
-                System.out.println(String.format(("(goto , - , - , L%d"), ContadorSalidaCodigo));
-                System.out.println(String.format("(label, L%d , - , -)", ContadorSalidaCodigo));
+                System.out.println(String.format(("(goto , null , null , L%d"), ContadorSalidaCodigo));
+                System.out.println(String.format("(label, L%d , null , null)", ContadorSalidaCodigo));
                 ContadorSalidaCodigo++;
             }                                                       
 
@@ -98,7 +98,7 @@ public class CodigoIntermedio {
         //Rellena lista de identificadores
         for(String identificador :ListaIdentificadores){
             AnalizadorSemantico.añadirNodoIdenticador( identificador, TipoDato, null);
-            System.out.println(String.format("(Declare , %s , %s , -)", TipoDato,identificador));
+            System.out.println(String.format("(Declare , %s , %s , null)", TipoDato,identificador));
         }
         System.out.println();
     }
@@ -291,8 +291,19 @@ public class CodigoIntermedio {
 
         // asigna valores a los argumentos
         Cuarteto.Operador = Operador;
-        Cuarteto.Argumento1 = OpIzq.get(0);
-        Cuarteto.Argumento2 = OpDer.get(0);
+        if (OpIzq.size()==1) {
+            Cuarteto.Argumento1 = OpIzq.get(0);
+        }
+        else{
+            Cuarteto.Argumento1 = OpIzq.get(0)+OpIzq.get(1);
+        }
+        if (OpDer.size()==1) {
+            Cuarteto.Argumento1 = OpDer.get(0);
+        }
+        else{
+            Cuarteto.Argumento1 = OpDer.get(0)+OpDer.get(1);
+        }
+
         // Planteamos la operacionc con temporal
         if (Resultado.indexOf("t") != -1) {
             Cuarteto.Resultado = Resultado;
