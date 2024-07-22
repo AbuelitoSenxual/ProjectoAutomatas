@@ -12,8 +12,6 @@ begin
     a := j + 35;
 end.
 
-
-
 /*program miprograma;*/
 /*var a,x,b,n : integer;*/
 /*begin*/
@@ -24,8 +22,6 @@ end.
 /*write ("escribir");*/
 /*end;*/
 /*end.*/
-
-
 
 /*SEMANTICO*/
 /*QUE NO SE REPITA LA PALABRA RECERVADA PARA EL PROGRAMA */
