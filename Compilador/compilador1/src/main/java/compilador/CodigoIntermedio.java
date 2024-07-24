@@ -11,16 +11,11 @@ public class CodigoIntermedio {
     static int ContadorEtiquetasTemp=1;
     static int ContadorSalidaCodigo=1;
     static NodoIdentificadores IdentificadorInicial;
+    static Cuartetos NodoInicialCuarteto; 
 
-    public static void main(String[] args) {
+ 
 
-        
-        NodoIni = AnalizadorLexico.ObtenerNodoIniLexemas();
-        Aux = NodoIni.NodoSig.NodoSig;
 
-        GenerarCodigoIntermedio();
-
-    }
 
     public static void GenerarCodigoIntermedio() {
         // Recorre codigo buscando Operaciones Asignaciones y codicionales
@@ -54,14 +49,15 @@ public class CodigoIntermedio {
                 Aux = Aux.NodoSig;
                 Arg2 =Aux.Token;
 
-                System.out.println(String.format("(%s , %s , %s , T%d)", OpBooleano,Arg1,Arg2,ContadorEtiquetasTemp));
-                System.out.println(String.format("(if_False , T%d , null , L%d)", ContadorEtiquetasTemp,ContadorSalidaCodigo+1));
-                System.out.println(String.format("(label, L%d , null , null)", ContadorSalidaCodigo));
+                GuardarCuarteto(OpBooleano,Arg1,Arg2,String.valueOf(ContadorEtiquetasTemp));
+                GuardarCuarteto("if_False", "t"+ContadorEtiquetasTemp, null, "L"+ContadorSalidaCodigo+1);
+                GuardarCuarteto("label", "L"+ContadorSalidaCodigo, null, null);
+
                 ContadorEtiquetasTemp++;
                 ContadorSalidaCodigo++;
                 GenerarCodigoIntermedio();
-                System.out.println(String.format(("(goto , null , null , L%d"), ContadorSalidaCodigo));
-                System.out.println(String.format("(label, L%d , null , null)", ContadorSalidaCodigo));
+                GuardarCuarteto("goto", null, null, "L"+ContadorSalidaCodigo);
+                GuardarCuarteto("label", "L"+ContadorSalidaCodigo+1, null, null);
                 ContadorSalidaCodigo++;
             }                                                       
 
@@ -98,7 +94,7 @@ public class CodigoIntermedio {
         //Rellena lista de identificadores
         for(String identificador :ListaIdentificadores){
             AnalizadorSemantico.añadirNodoIdenticador( identificador, TipoDato, null);
-            System.out.println(String.format("(Declare , %s , %s , null)", TipoDato,identificador));
+            GuardarCuarteto("Declare", TipoDato, identificador, null);
         }
         System.out.println();
     }
@@ -141,10 +137,8 @@ public class CodigoIntermedio {
 
         // verifica que no sea una igualacion
         if (ListaOperaciones.size() == 1) {
-            Cuarteto.Operador = "Asignacion";
-            Cuarteto.Argumento1 = ListaOperaciones.get(0);
-            Cuarteto.Resultado = Resultado;
-            System.out.println(Cuarteto.toString());
+
+            GuardarCuarteto("Asignacion", ListaOperaciones.get(0), null, Resultado);
             return;
         }
 
@@ -153,35 +147,22 @@ public class CodigoIntermedio {
 
             // vefica si es una operacion directa (3+5)
             if (ListaOperaciones.get(0).matches("\\d+") && ListaOperaciones.get(2).matches("\\d+")) {
-                Cuarteto.Operador = "Asignacion";
-                Cuarteto.Argumento1 = String.valueOf(
+                String argumento1 = String.valueOf(
                         OperacionSimple(ListaOperaciones.get(0), ListaOperaciones.get(1), ListaOperaciones.get(2)));
-                Cuarteto.Resultado = Resultado;
-                System.out.println(Cuarteto.toString());
+                GuardarCuarteto("Asignacion", argumento1, null, Resultado);
                 return;
             }
             // es una operacion con una variable y un numero (j+5)
             else {
                 // Genera la operacion en temporal
                 if (Resultado.indexOf("t") != -1) {
-                    Cuarteto.Argumento1 = ListaOperaciones.get(0);
-                    Cuarteto.Operador = ListaOperaciones.get(1);
-                    Cuarteto.Argumento2 = ListaOperaciones.get(2);
-                    Cuarteto.Resultado = Resultado;
-                    System.out.println(Cuarteto.toString());
+                    GuardarCuarteto(ListaOperaciones.get(1), ListaOperaciones.get(0), ListaOperaciones.get(2), Resultado);
                     return;
                 } else {
                     // Genera la operacion con temporal
-                    Cuarteto.Argumento1 = ListaOperaciones.get(0);
-                    Cuarteto.Operador = ListaOperaciones.get(1);
-                    Cuarteto.Argumento2 = ListaOperaciones.get(2);
-                    Cuarteto.Resultado = "t" + ContadorEtiquetasTemp;
+                    GuardarCuarteto(ListaOperaciones.get(1), ListaOperaciones.get(0), ListaOperaciones.get(2), "t" + ContadorEtiquetasTemp);
 
-                    System.out.println(Cuarteto.toString());
-                    Cuarteto.Operador = "Asignacion";
-                    Cuarteto.Argumento1 = "t" + ContadorEtiquetasTemp;
-                    Cuarteto.Resultado = Resultado;
-                    System.out.println(Cuarteto.toString());
+                    GuardarCuarteto("Asignacion", "t" + ContadorEtiquetasTemp, null, Resultado);
                     ContadorEtiquetasTemp++;
                     return;
                 }
@@ -290,37 +271,35 @@ public class CodigoIntermedio {
         }
 
         // asigna valores a los argumentos
-        Cuarteto.Operador = Operador;
+        String Arg1 = "";
         if (OpIzq.size()==1) {
-            Cuarteto.Argumento1 = OpIzq.get(0);
+            Arg1 = OpIzq.get(0);
         }
         else{
-            Cuarteto.Argumento1 = OpIzq.get(0)+OpIzq.get(1);
+            Arg1 = OpIzq.get(0)+OpIzq.get(1);
         }
         if (OpDer.size()==1) {
-            Cuarteto.Argumento1 = OpDer.get(0);
+            Arg1 = OpDer.get(0);
         }
         else{
-            Cuarteto.Argumento1 = OpDer.get(0)+OpDer.get(1);
+            Arg1 = OpDer.get(0)+OpDer.get(1);
         }
 
         // Planteamos la operacionc con temporal
         if (Resultado.indexOf("t") != -1) {
             Cuarteto.Resultado = Resultado;
-            System.out.println(Cuarteto.toString());
+            GuardarCuarteto(Operador, Arg1, null, Resultado);
+
 
         } else {
-            Cuarteto.Resultado = "t" + ContadorEtiquetasTemp;
-            System.out.println(Cuarteto.toString());
-            Cuarteto.Operador = "Asignacion";
-            Cuarteto.Argumento1 = "t" + ContadorEtiquetasTemp;
-            Cuarteto.Resultado = Resultado;
-            System.out.println(Cuarteto.toString());
+            GuardarCuarteto(Operador, Arg1, null, "t" + ContadorEtiquetasTemp);
+
+            GuardarCuarteto("Asignacion", "t" + ContadorEtiquetasTemp, null, Resultado);
+            
             ContadorEtiquetasTemp++;
         }
 
     }
-
     public static ArrayList<String> GenerarListaOperaciones(String operation) {
         ArrayList<String> elements = new ArrayList<>();
 
@@ -334,7 +313,6 @@ public class CodigoIntermedio {
 
         return elements;
     }
-
     public static int OperacionSimple(String num1, String operator, String num2) {
         // Convertir las cadenas de números a enteros
         int number1 = Integer.parseInt(num1);
@@ -365,7 +343,6 @@ public class CodigoIntermedio {
 
         return result;
     }
-
     public static int EcontrarIndiceOperador(ArrayList<String> Lista) {
         int Indice = 0;
 
@@ -384,5 +361,35 @@ public class CodigoIntermedio {
         return Indice;
 
     }
+    public static void GuardarCuarteto(String Operador, String Argumento1, String Argumento2, String Resultado) {
+        Cuartetos nuevoNodo = new Cuartetos();
+        nuevoNodo.Operador = Operador;
+        nuevoNodo.Argumento1 = Argumento1;
+        nuevoNodo.Argumento2 = Argumento2;
+        nuevoNodo.Resultado = Resultado;
 
+        if (NodoInicialCuarteto == null) {
+            // Si NodoInicialCuarteto es nulo, el nuevo nodo se convierte en la cabeza.
+            NodoInicialCuarteto = nuevoNodo;
+        } else {
+            // Si NodoInicialCuarteto no es nulo, recorre la lista hasta el final.
+            Cuartetos current = NodoInicialCuarteto;
+            while (current.SigCuarteto != null) {
+                current = current.SigCuarteto;
+            }
+            current.SigCuarteto = nuevoNodo;
+        }
+
+        // Imprimir cuarteto
+        System.out.println(nuevoNodo.toString());
+        
+    }
+    
+    
+    public static Cuartetos ObtenerCuarteto (){
+        NodoIni= AnalizadorLexico.ObtenerNodoIniLexemas();
+        Aux = NodoIni.NodoSig.NodoSig;
+        GenerarCodigoIntermedio();
+        return NodoInicialCuarteto;
+    }
 }
